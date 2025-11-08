@@ -17,3 +17,43 @@ spec:
               number: 80
         path: /
         pathType: Exact
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: app1-helloworld-https
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
+    # alt cert-manager.io/issuer: "my-issuer"
+    cert-manager.io/common-name: "app1-helloworld-https.zulu.azlog.in"
+    cert-manager.io/alt-names: "www.app1-helloworld-https.zulu.azlog.in"
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - app1-helloworld-https.zulu.azlog.in
+    - www.app1-helloworld-https.zulu.azlog.in
+    secretName: app1-helloworld-https-zulu-azlog-in-tls
+  rules:
+  - host: app1-helloworld-https.zulu.azlog.in
+    http:
+      paths:
+      - backend:
+          service:
+            name: app1-helloworld
+            port:
+              number: 80
+        path: /
+        pathType: Exact
+          - host: app1-helloworld-https.zulu.azlog.in
+  - host: www.app1-helloworld-https.zulu.azlog.in
+    http:
+      paths:
+      - backend:
+          service:
+            name: app1-helloworld
+            port:
+              number: 80
+        path: /
+        pathType: Exact
