@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: app1-helloworld
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: app1-helloworld.zulu.azlog.in
+    http:
+      paths:
+      - backend:
+          service:
+            name: app1-helloworld
+            port:
+              number: 80
+        path: /
+        pathType: Exact
