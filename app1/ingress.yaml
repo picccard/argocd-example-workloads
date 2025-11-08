@@ -23,7 +23,7 @@ kind: Ingress
 metadata:
   name: app1-helloworld-https
   annotations:
-    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
     cert-manager.io/cluster-issuer: "letsencrypt-production"
     # alt cert-manager.io/issuer: "my-issuer"
     cert-manager.io/common-name: "app1-helloworld-https.zulu.azlog.in"
@@ -46,7 +46,6 @@ spec:
               number: 80
         path: /
         pathType: Exact
-          - host: app1-helloworld-https.zulu.azlog.in
   - host: www.app1-helloworld-https.zulu.azlog.in
     http:
       paths:
